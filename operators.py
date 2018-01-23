@@ -46,9 +46,9 @@ def main():
     #     18392   Frank   Smith   45      5'8
     #
     # Customer__fname_id
-    #         fname   id
-    #         Frank   18392
-    #         Jane    48921
+    #     fname   id
+    #     Frank   18392
+    #     Jane    48921
 
 if __name__ == '__main__':
     main()
