@@ -3,7 +3,7 @@ Functions and types for working with mathematical relations.
 
 ## Example
 
-```python3
+```python
 from relation import Relation, Schema
 from operators import Pi
 
