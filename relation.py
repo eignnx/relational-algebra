@@ -28,13 +28,11 @@ class Relation:
 
 
 def main():
-    Customer = Schema("Customer", "id, fname, lname, age, height")
-    customer = Relation(Customer)
-
+    customer = Relation(Schema("Customer", "id, fname, lname, age, height"))
     customer.add(id=18392, fname="Frank", lname="Smith", age=45, height="5'8")
     customer.add(id=48921, fname="Jane", lname="Doe", age=42, height="5'6")
 
-    print(customer, end="\n")
+    print(customer)
     # output:
     #
     # Customer
