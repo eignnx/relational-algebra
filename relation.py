@@ -34,7 +34,13 @@ def main():
     customer.add(id=18392, fname="Frank", lname="Smith", age=45, height="5'8")
     customer.add(id=48921, fname="Jane", lname="Doe", age=42, height="5'6")
 
-    print(customer, end="\n\n")
+    print(customer, end="\n")
+    # output:
+    #
+    # Customer
+    #     id      fname   lname   age     height
+    #     18392   Frank   Smith   45      5'8
+    #     48921   Jane    Doe     42      5'6
 
 if __name__ == '__main__':
     main()
