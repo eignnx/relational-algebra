@@ -38,6 +38,13 @@ def _sigma_impl(pred):
 
 Sigma = OperatorProducer(_sigma_impl)
 
+def _rho_impl(new_name):
+    def fn(relation):
+        return Relation(Schema(new_name, relation.schema._fields), relation.tuples)
+    return fn
+
+Rho = OperatorProducer(_rho_impl)
+
 def main():
     customer = Relation(Schema("Customer", "id, fname, lname, age, height"))
     customer.add(id=18392, fname="Frank", lname="Smith", age=45, height="5'8")
@@ -70,6 +77,16 @@ def main():
     # Customer
     #     id      fname   lname   age     height
     #     18392   Frank   Smith   45      5'8
+
+    print()
+    print(Rho["MySchema"](Pi["fname", "id"](customer)))
+
+    # output:
+    #
+    # MySchema
+    #     fname   id
+    #     Frank   18392
+    #     Jane    48921
 
 if __name__ == '__main__':
     main()
