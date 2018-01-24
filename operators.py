@@ -5,9 +5,9 @@ class OperatorProducer:
         self.producer_fn = producer_fn
 
     def __getitem__(self, *args):
-        return self.producer_fn(*args[0])
+        return self.producer_fn(args[0]) # Don't unpack. Pass as list. But do flatten.
 
-def _pi_impl(*attrs):
+def _pi_impl(attrs):
     def fn(relation: Relation):
         
         assert set(attrs) <= set(relation.schema._fields), \
@@ -29,14 +29,21 @@ def _pi_impl(*attrs):
 
 Pi = OperatorProducer(_pi_impl)
 
+def _sigma_impl(pred):
+    def fn(relation):
+        new_relation = Relation(relation.schema)
+        new_relation.tuples = set(filter(pred, relation.tuples))
+        return new_relation
+    return fn
+
+Sigma = OperatorProducer(_sigma_impl)
+
 def main():
     customer = Relation(Schema("Customer", "id, fname, lname, age, height"))
     customer.add(id=18392, fname="Frank", lname="Smith", age=45, height="5'8")
     customer.add(id=48921, fname="Jane", lname="Doe", age=42, height="5'6")
 
     print(customer)
-    print()
-    print(Pi["fname", "id"](customer))
 
     # output:
     #
@@ -44,11 +51,25 @@ def main():
     #     id      fname   lname   age     height
     #     48921   Jane    Doe     42      5'6
     #     18392   Frank   Smith   45      5'8
+
+    print()
+    print(Pi["fname", "id"](customer))
+
+    # output:
     #
     # Customer__fname_id
     #     fname   id
     #     Frank   18392
     #     Jane    48921
+
+    print()
+    print(Sigma[lambda tup: tup.age > 43](customer))
+
+    # output:
+    #
+    # Customer
+    #     id      fname   lname   age     height
+    #     18392   Frank   Smith   45      5'8
 
 if __name__ == '__main__':
     main()
