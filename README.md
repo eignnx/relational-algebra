@@ -13,8 +13,8 @@ customer.add(id=18392, fname="Frank", lname="Smith", age=45, height="5'8")
 customer.add(id=48921, fname="Jane", lname="Doe", age=42, height="5'6")
 
 print(customer)
-print()
 print(Pi["fname", "id"](customer))
+print(Sigma[lambda tup: tup.age > 43](customer))
 ```
 
 Output:
@@ -28,4 +28,8 @@ Customer__fname_id
     fname   id
     Frank   18392
     Jane    48921
+
+Customer
+    id      fname   lname   age     height
+    18392   Frank   Smith   45      5'8
 ```
